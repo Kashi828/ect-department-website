@@ -1,6 +1,7 @@
 node_modules
 .next
 .env.local
+.env*
 .vercel
 public/uploads
 content/data.json
