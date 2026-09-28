@@ -6,6 +6,10 @@ import Link from "next/link";
 import { getSettings, getFaculty, getEvents, getSyllabus } from "@/lib/site-data";
 import { splitEventsByDate } from "@/lib/dates";
 
+// Render at request time like the other content pages: admin edits show up
+// instantly and builds never depend on the content store at compile time.
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const settings = await getSettings();
   const rawFaculty = await getFaculty();

@@ -60,7 +60,7 @@ export default function HeroCarousel({ line1, line2, subtitle, facts }) {
             <div className="hero__terminal-meta">MG UNIVERSITY · NSS COLLEGE RAJAKUMARI · KERALA</div>
           </div>
           <div className="hero__facts">
-            {facts.map((f) => (
+            {(facts || []).map((f) => (
               <div key={f.label} className="hero__fact">
                 <span>{f.label}</span>
                 <strong>{f.heading}</strong>
