@@ -176,6 +176,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .topper-card__main span { display: block; margin-top: 7px; color: var(--muted); font-size: .78rem; }
 .topper-card__score { justify-self: end; text-align: right; font: 600 2rem var(--font-display); letter-spacing: -.05em; }
 .topper-card__score small { display: block; font: 500 9px var(--font-mono); color: var(--muted); letter-spacing: .1em; }
+.topper-card.has-photo { grid-template-columns: 80px 64px minmax(0, 1fr) 130px; }
+.topper-card__photo { position: relative; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; border: 1px solid var(--line); background: var(--line); }
 
 /* Events, achievements, alumni, gallery */
 .event-layout { display: grid; grid-template-columns: minmax(0, .4fr) minmax(0, 1.6fr); gap: 24px; }
@@ -391,6 +393,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .faculty-grid { grid-template-columns: 1fr; }
   .faculty-card__image { aspect-ratio: 1 / 1.1; }
   .topper-card { grid-template-columns: 34px minmax(0, 1fr) 95px; gap: 10px; }
+  .topper-card.has-photo { grid-template-columns: 34px 44px minmax(0, 1fr) 95px; }
+  .topper-card__photo { width: 44px; height: 44px; }
   .topper-card__score { font-size: 1.55rem; }
   .event-item { grid-template-columns: 84px minmax(0, 1fr) 96px; gap: 12px; }
   .event-item__poster { width: 96px; height: 82px; }

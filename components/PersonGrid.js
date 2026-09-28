@@ -43,13 +43,18 @@ function TopperCard({ person, index }) {
   const reduce = useReducedMotion();
   return (
     <motion.article
-      className="topper-card"
+      className={`topper-card ${person.photoUrl ? "has-photo" : ""}`}
       initial={reduce ? false : { opacity: 0, y: 25 }}
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={reduce ? undefined : { duration: 0.55, delay: index * 0.06 }}
     >
       <div className="topper-card__number">{String(index + 1).padStart(2, "0")}</div>
+      {person.photoUrl && (
+        <div className="topper-card__photo">
+          <Image src={person.photoUrl} alt={person.name} fill sizes="64px" className="object-cover object-top" />
+        </div>
+      )}
       <div className="topper-card__main">
         <h3>{person.name}</h3>
         <span>{person.yearLabel}</span>
