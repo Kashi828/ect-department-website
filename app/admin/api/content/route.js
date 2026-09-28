@@ -4,7 +4,7 @@ import { readData, updateSection, isReadOnly, SECTIONS } from "@/lib/content-sto
 
 export async function GET() {
   if (!isAuthed()) return NextResponse.json({ ok: false }, { status: 401 });
-  return NextResponse.json({ ok: true, data: readData() });
+  return NextResponse.json({ ok: true, data: await readData() });
 }
 
 export async function POST(req) {
@@ -19,6 +19,6 @@ export async function POST(req) {
       { status: 500 }
     );
   }
-  const data = updateSection(section, value);
+  const data = await updateSection(section, value);
   return NextResponse.json({ ok: true, data });
 }

@@ -228,6 +228,29 @@ function SettingsEditor({ data, onChange, upload, save, busy }) {
           <Field label="Hero subtitle" value={data.heroSubtitle} textarea onChange={(v) => onChange({ ...data, heroSubtitle: v })} />
         </div>
       </article>
+
+      <article className="admin-card">
+        <div className="admin-card__head"><strong>Hero quotes · slide 2</strong></div>
+        <div className="admin-grid">
+          <Field label="Slide 2 title" value={data.heroQuote?.slide2Title} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, slide2Title: v } })} />
+          <Field label="Slide 2 subtitle" value={data.heroQuote?.slide2Subtitle} textarea onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, slide2Subtitle: v } })} />
+          <Field label="Highlight 1" value={data.heroQuote?.highlight1} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight1: v } })} />
+          <Field label="Highlight 2" value={data.heroQuote?.highlight2} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight2: v } })} />
+          <Field label="Highlight 3" value={data.heroQuote?.highlight3} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight3: v } })} />
+          <Field label="Highlight 4" value={data.heroQuote?.highlight4} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight4: v } })} />
+        </div>
+      </article>
+
+      <article className="admin-card">
+        <div className="admin-card__head"><strong>DEPT_SIGNAL.log terminal (hero right)</strong></div>
+        <div className="admin-grid">
+          <Field label="Command line" value={data.heroQuote?.signalCommand} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, signalCommand: v } })} />
+          <Field label="Title line 1" value={data.heroQuote?.signalTitleLine1} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, signalTitleLine1: v } })} />
+          <Field label="Title line 2 (starts with 'meets…')" value={data.heroQuote?.signalTitleLine2} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, signalTitleLine2: v } })} />
+          <Field label="Meta line" value={data.heroQuote?.signalMeta} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, signalMeta: v } })} />
+        </div>
+      </article>
+
       <div className="admin-row">
         <button className="admin-btn admin-btn--primary" disabled={busy} onClick={() => save("siteSettings")}>{busy ? "Saving…" : "Save changes"}</button>
       </div>

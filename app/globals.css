@@ -79,6 +79,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero__orb--two { width: 340px; height: 340px; right: 120px; bottom: -220px; animation-delay: -3s; }
 .hero__inner { position: relative; flex: 1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .75fr); gap: 60px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
 .hero__left { max-width: 850px; }
+.hero__slides { display: grid; }
 .hero__eyebrow { display: flex; align-items: center; gap: 10px; font: 500 10px var(--font-mono); letter-spacing: .13em; color: #acb1ad; margin-bottom: 26px; }
 .hero__eyebrow i { width: 28px; height: 1px; background: var(--accent); display: block; }
 .hero__title { margin: 0; font: 600 clamp(3.6rem, 9vw, 8.5rem)/.82 var(--font-display); letter-spacing: -.075em; max-width: 10ch; }
@@ -318,6 +319,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .admin-login { display: grid; place-items: center; min-height: 60vh; }
 .admin-login__card { width: min(420px, 100%); border: 1px solid var(--line); background: var(--surface); padding: 30px; display: grid; gap: 14px; box-shadow: 12px 12px 0 rgba(17,19,21,.06); }
 .admin-error { margin: 0; color: #b91c1c; font-size: .8rem; }
+
+/* Legal pages (terms / privacy) */
+.legal-body { max-width: 760px; color: #3c403c; font-size: .82rem; line-height: 1.75; display: grid; gap: 14px; }
+.legal-body h3 { margin: 18px 0 0; font: 600 1.05rem/1.2 var(--font-display); letter-spacing: -.02em; color: var(--dark); }
+.legal-body a { color: #3d6b8f; text-decoration: underline; text-underline-offset: 3px; }
+.legal-body p { margin: 0; }
 
 /* Footer */
 .site-footer { margin-top: 80px; background: var(--dark); color: #f0f2ed; }

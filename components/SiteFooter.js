@@ -18,6 +18,8 @@ export default function SiteFooter() {
           <Link href="/faculty">Faculty</Link>
           <Link href="/events">Activities</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/privacy">Privacy</Link>
         </div>
       </div>
       <div className="wrap footer-bottom">

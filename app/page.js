@@ -21,7 +21,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <HeroCarousel line1={settings.heroLine1} line2={settings.heroLine2} subtitle={settings.heroSubtitle} facts={settings.heroFacts} />
+      <HeroCarousel line1={settings.heroLine1} line2={settings.heroLine2} subtitle={settings.heroSubtitle} facts={settings.heroFacts} quote={settings.heroQuote} />
 
       <div className="signal-row">
         <div className="signal-track" aria-hidden="true">

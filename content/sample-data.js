@@ -32,6 +32,19 @@ export const siteSettings = {
       heading: "Mahatma Gandhi University, Kottayam",
     },
   ],
+  heroQuote: {
+    slide2Title: "From transistor to full-stack.",
+    slide2Subtitle:
+      "A hybrid discipline where circuits, computation, intelligence and interfaces belong in the same room.",
+    highlight1: "Embedded systems",
+    highlight2: "AI / Machine Learning",
+    highlight3: "IoT / Robotics",
+    highlight4: "Software engineering",
+    signalCommand: "who-we-are",
+    signalTitleLine1: "electronics",
+    signalTitleLine2: "meets computation",
+    signalMeta: "MG UNIVERSITY · NSS COLLEGE RAJAKUMARI · KERALA",
+  },
 };
 
 // Real events, most recent first. "status" (upcoming/past) is no longer stored here —
