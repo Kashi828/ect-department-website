@@ -121,7 +121,7 @@ export default function AdminPage() {
         ))}
       </nav>
 
-      {tab === "siteSettings" && <SettingsEditor data={data.siteSettings} onChange={(v) => setSection("siteSettings", v)} upload={upload} />}
+      {tab === "siteSettings" && <SettingsEditor data={data.siteSettings} onChange={(v) => setSection("siteSettings", v)} save={save} upload={upload} busy={busy} />}
       {tab === "faculty" && <ListEditor section="faculty" items={data.faculty} onChange={(v) => setSection("faculty", v)} save={save} upload={upload} busy={busy}
         fields={{ name: "Name", role: "Role" }} photoKey="photo" />}
       {tab === "toppers" && <ListEditor section="toppers" items={data.toppers} onChange={(v) => setSection("toppers", v)} save={save} upload={upload} busy={busy}
@@ -228,6 +228,9 @@ function SettingsEditor({ data, onChange, upload, save, busy }) {
           <Field label="Hero subtitle" value={data.heroSubtitle} textarea onChange={(v) => onChange({ ...data, heroSubtitle: v })} />
         </div>
       </article>
+      <div className="admin-row">
+        <button className="admin-btn admin-btn--primary" disabled={busy} onClick={() => save("siteSettings")}>{busy ? "Saving…" : "Save changes"}</button>
+      </div>
     </section>
   );
 }
