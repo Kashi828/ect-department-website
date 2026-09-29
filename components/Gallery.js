@@ -20,7 +20,7 @@ export default function Gallery({ images }) {
             viewport={{ once: true, amount: .1 }}
             transition={{ duration: .5, delay: i * .04 }}
             aria-label={`Open ${g.label}`}
-            style={{ aspectRatio: g.aspect || undefined }}
+            style={g.aspect ? ({ "--card-aspect": g.aspect }) : undefined}
           >
             <Image src={g.src} alt={g.label} fill sizes="(max-width: 800px) 100vw, 50vw" className="object-cover object-top" />
             <span className="gallery-card__caption">{g.label}</span>

@@ -222,8 +222,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .alumni-table { width: 100%; border-collapse: collapse; min-width: 720px; }
 .alumni-table th { text-align: left; font: 500 9px var(--font-mono); color: var(--muted); letter-spacing: .08em; padding: 13px 0; }
 .alumni-table td { padding: 18px 0; border-top: 1px solid var(--line); font-size: .87rem; }
-.gallery-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
-.gallery-card { position: relative; overflow: hidden; min-height: 300px; border: 1px solid var(--line); background: #d5d1c6; cursor: pointer; padding: 0; text-align: left; }
+.gallery-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }  .gallery-card { position: relative; overflow: hidden; min-height: 300px; aspect-ratio: var(--card-aspect, auto); border: 1px solid var(--line); background: #d5d1c6; cursor: pointer; padding: 0; text-align: left; }
 .gallery-card:nth-child(1) { grid-column: span 7; }
 .gallery-card:nth-child(2) { grid-column: span 5; }
 .gallery-card:nth-child(n+3) { grid-column: span 4; }
@@ -374,10 +373,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .header-aside, .nav-index, .nav-status { display: none; }
   .site-header__inner { min-height: 94px; }
   .nav-bar__inner { justify-content: flex-end; }
-  .nav-menu-toggle { display: inline-flex; align-items: center; gap: 9px; margin-left: auto; border: 0; background: none; font: 500 9px var(--font-mono); }
-  .nav-menu-toggle__icon { width: 17px; height: 11px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; }
-  .nav-menu-toggle__icon::after { content: ''; position: absolute; left: 0; right: 0; top: 4px; border-top: 1px solid var(--ink); }
-  .nav-menu-toggle__icon.is-open::after { transform: rotate(90deg); opacity: .4; }
+  .nav-menu-toggle { display: inline-flex; align-items: center; gap: 9px; margin-left: auto; border: 0; background: none; font: 500 9px var(--font-mono); min-height: 44px; padding: 0 2px; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  /* Three-bar hamburger: middle bar is the element, outer bars are pseudos.
+     Open state fades the middle and crosses the outer two into a real ×. */
+  .nav-menu-toggle__icon { width: 17px; height: 1px; background: var(--ink); position: relative; transition: background .2s ease; }
+  .nav-menu-toggle__icon::before, .nav-menu-toggle__icon::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: var(--ink); transition: transform .25s ease; }
+  .nav-menu-toggle__icon::before { top: -5px; }
+  .nav-menu-toggle__icon::after { top: 5px; }
+  .nav-menu-toggle__icon.is-open { background: transparent; }
+  .nav-menu-toggle__icon.is-open::before { top: 0; transform: rotate(45deg); }
+  .nav-menu-toggle__icon.is-open::after { top: 0; transform: rotate(-45deg); }
   .nav-links { display: none; width: 100%; order: 3; flex-direction: column; border-top: 1px solid var(--line); padding: 8px 0; }
   .nav-links.is-open { display: flex; }
   .nav-bar__inner { flex-wrap: wrap; }
@@ -393,6 +398,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .admin-grid, .admin-grid--4 { grid-template-columns: 1fr; }
   .admin-course { grid-template-columns: 1fr; }
   .home-panel--large, .home-panel--small, .gallery-card:nth-child(1), .gallery-card:nth-child(2), .gallery-card:nth-child(n+3) { grid-column: span 12; }
+  /* Aspect ratios are desktop hints; on one-column phones they would force
+     the card wider than the screen (min-height x ratio). Fixed height instead. */
+  .gallery-card { min-height: 0; aspect-ratio: auto; height: 280px; }
   .site-footer__grid { grid-template-columns: 1fr; }
   .top-strip__links { display: none; }
 }
