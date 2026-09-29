@@ -312,4 +312,12 @@ export const galleryImages = [
   { src: "/posters/electro-spark-2026.jpg", label: "Electro-Spark 2026" },
   { src: "/posters/hasta-la-vista-farewell.jpg", label: "Hasta La Vista — Farewell 2K26" },
   { src: "/posters/photons-day.jpg", label: "Photons Day" },
+  { src: "/gallery/college-park-group.jpg", label: "Students at the college park", wide: true, aspect: "16 / 9" },
+  { src: "/gallery/ham-radio-swl-demo.jpg", label: "Ham radio demo · SWL contest, Vadamalai Medu", wide: true, aspect: "16 / 9" },
+  { src: "/gallery/farewell-2k26-group.jpg", label: "Hasta La Vista farewell · with students and teachers", wide: true, aspect: "4 / 3" },
+  { src: "/gallery/farewell-2k26-bench.jpg", label: "Hasta La Vista farewell 2K26", wide: true, aspect: "4 / 3" },
+  { src: "/gallery/farewell-2k26-portrait.jpg", label: "Farewell 2K26 · final-year batch" },
+  { src: "/gallery/farewell-2k26-faculty.jpg", label: "Farewell 2K26 · teachers at the send-off" },
+  { src: "/gallery/onam-celebration-group.jpg", label: "Onam celebration with Maveli", wide: true, aspect: "4 / 3" },
+  { src: "/gallery/onam-maveli.jpg", label: "Onam celebration" },
 ];

@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function ContactPage() {
   const settings = await getSettings();
   const galleryImages = await getGallery();
+  const telHref = `tel:${String(settings.phone || "").replace(/\(0\)/g, "").replace(/[^+\d]/g, "")}`;
   return (
     <>
       <section className="page-section page-section--dark">
@@ -22,7 +23,7 @@ export default async function ContactPage() {
             <p>Department of Electronics with Computer Technology · Kerala · Affiliated to Mahatma Gandhi University</p>
             <div className="contact-links">
               <a href={`mailto:${settings.email}`}>EMAIL <span>{settings.email}</span></a>
-              <a href={`tel:${settings.phone}`}>PHONE <span>{settings.phone}</span></a>
+              <a href={telHref}>PHONE <span>{settings.phone}</span></a>
               {settings.youtube && settings.youtube !== "#" ? (
                 <a href={settings.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE <span>{settings.youtube.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span></a>
               ) : null}
