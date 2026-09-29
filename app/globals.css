@@ -80,6 +80,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .hero__inner { position: relative; flex: 1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, .75fr); gap: 60px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
 .hero__left { max-width: 850px; }
 .hero__slides { display: grid; }
+.hero__slides > .hero__slide { grid-area: 1 / 1; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
+.hero__slides > .hero__slide.is-active { opacity: 1; pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__slides > .hero__slide { transition: none; }
+}
 .hero__eyebrow { display: flex; align-items: center; gap: 10px; font: 500 10px var(--font-mono); letter-spacing: .13em; color: #acb1ad; margin-bottom: 26px; }
 .hero__eyebrow i { width: 28px; height: 1px; background: var(--accent); display: block; }
 .hero__title { margin: 0; font: 600 clamp(3.6rem, 9vw, 8.5rem)/.82 var(--font-display); letter-spacing: -.075em; max-width: 10ch; }
@@ -327,6 +332,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .legal-body h3 { margin: 18px 0 0; font: 600 1.05rem/1.2 var(--font-display); letter-spacing: -.02em; color: var(--dark); }
 .legal-body a { color: #3d6b8f; text-decoration: underline; text-underline-offset: 3px; }
 .legal-body p { margin: 0; }
+
+/* Photo crop modal */
+.crop-modal { position: fixed; inset: 0; z-index: 120; background: rgba(17,19,21,.72); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.crop-modal__card { width: 100%; max-width: 460px; background: #fff; color: var(--dark); border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,.35); display: flex; flex-direction: column; }
+.crop-modal__head { display: flex; flex-direction: column; gap: 3px; padding: 16px 18px 12px; border-bottom: 1px solid var(--line); }
+.crop-modal__head strong { font: 600 1rem var(--font-display); letter-spacing: -.02em; }
+.crop-modal__head span { color: var(--muted); font-size: .72rem; }
+.crop-modal__stage { position: relative; width: 100%; aspect-ratio: 1 / .78; background: #191b1d; }
+.crop-modal__controls { display: grid; gap: 8px; padding: 14px 18px 4px; }
+.crop-modal__slider { display: grid; grid-template-columns: 52px 1fr; align-items: center; gap: 10px; font: 500 9px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.crop-modal__slider input { width: 100%; accent-color: var(--dark); }
+.crop-modal__actions { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 18px 18px; }
 
 /* Footer */
 .site-footer { margin-top: 80px; background: var(--dark); color: #f0f2ed; }

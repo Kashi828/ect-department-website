@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 const DEFAULT_QUOTE = {
   slide2Title: "From transistor to full-stack.",
@@ -43,6 +43,13 @@ export default function HeroCarousel({ line1, line2, subtitle, facts, quote }) {
   const reduce = useReducedMotion();
   const total = 2;
 
+  // Both slides stay mounted in one grid cell at all times and crossfade via
+  // CSS opacity, so the cell height (and the whole hero, including the
+  // DEPT_SIGNAL.log terminal) is pixel-stable before, during and after the
+  // transition. Unmounting the outgoing slide mid-fade is what made the
+  // terminal jump around like an earthquake.
+  const slideClass = (i) => `hero__slide${slide === i ? " is-active" : ""}`;
+
   useEffect(() => {
     if (reduce) return undefined;
     const id = setInterval(() => setSlide((s) => (s + 1) % total), 6200);
@@ -60,26 +67,21 @@ export default function HeroCarousel({ line1, line2, subtitle, facts, quote }) {
           {/* Both slides share one grid cell, so the column height never
               changes and the DEPT_SIGNAL.log terminal stays in place. */}
           <div className="hero__slides">
-            <AnimatePresence initial={false}>
-              {slide === 0 ? (
-                <motion.div key="intro" style={{ gridArea: "1 / 1" }} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.55 }}>
-                  <h1 className="hero__title">{line1}<br /><em>{line2}</em></h1>
-                  <p className="hero__lede">{subtitle}</p>
-                  <div className="hero__actions">
-                    <Link href="/faculty" className="button button--light">Meet the faculty <span>↗</span></Link>
-                    <Link href="/events" className="button button--ghost">See the activity <span>↗</span></Link>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div key="teach" style={{ gridArea: "1 / 1" }} initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.55 }}>
-                  <h2 className="hero__title hero__title--small">{renderTitle(q.slide2Title)}</h2>
-                  <p className="hero__lede">{q.slide2Subtitle}</p>
-                  <div className="hero__skill-grid">
-                    {highlights.map(([n, label]) => <div className="hero__skill" key={label}><span>{n}</span><strong>{label}</strong></div>)}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className={slideClass(0)} aria-hidden={slide !== 0}>
+              <h1 className="hero__title">{line1}<br /><em>{line2}</em></h1>
+              <p className="hero__lede">{subtitle}</p>
+              <div className="hero__actions">
+                <Link href="/faculty" className="button button--light">Meet the faculty <span>↗</span></Link>
+                <Link href="/events" className="button button--ghost">See the activity <span>↗</span></Link>
+              </div>
+            </div>
+            <div className={slideClass(1)} aria-hidden={slide !== 1}>
+              <h2 className="hero__title hero__title--small">{renderTitle(q.slide2Title)}</h2>
+              <p className="hero__lede">{q.slide2Subtitle}</p>
+              <div className="hero__skill-grid">
+                {highlights.map(([n, label]) => <div className="hero__skill" key={label}><span>{n}</span><strong>{label}</strong></div>)}
+              </div>
+            </div>
           </div>
         </div>
 

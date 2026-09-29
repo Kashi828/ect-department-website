@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import PhotoCropModal from "@/components/PhotoCropModal";
 
 const EMPTY = {
   siteSettings: {},
@@ -67,13 +68,15 @@ export default function AdminPage() {
     setTimeout(() => setSaved(""), 2500);
   }
 
-  async function upload(file, cb) {
+  async function upload(blob, cb) {
     const fd = new FormData();
-    fd.append("file", file);
+    const name = blob.name || `photo-${Date.now()}.jpg`;
+    fd.append("file", blob, name);
     const res = await fetch("/admin/api/upload", { method: "POST", body: fd });
     const r = await res.json();
     if (r.ok) cb(r.url);
     else alert(r.error || "Upload failed");
+    return Boolean(r.ok); // lets PhotoCropModal keep the crop open on failure
   }
 
   if (!authed) {
@@ -153,19 +156,45 @@ function Field({ label, value, onChange, textarea }) {
   );
 }
 
-function PhotoPicker({ label, value, onChange, upload }) {
+function PhotoPicker({ label, value, onChange, upload, aspect = 1 }) {
+  const inputRef = useRef(null);
+  const [cropFile, setCropFile] = useState(null);
   return (
     <div className="admin-photo">
       <span className="admin-field__label">{label || "Photo"}</span>
       <div className="admin-photo__row">
         {value ? <img src={value} alt="" /> : <span className="admin-photo__empty">No image</span>}
         <input placeholder="/people/… or /uploads/…" value={value ?? ""} onChange={(e) => onChange(e.target.value)} />
-        <label className="admin-btn admin-btn--small">
+        {/* A real button that clicks the input: more reliable than a styled
+            <label> wrapper on phone browsers. */}
+        <button type="button" className="admin-btn admin-btn--small" onClick={() => inputRef.current?.click()}>
           Upload
-          <input type="file" accept="image/*" hidden onChange={(e) => e.target.files?.[0] && upload(e.target.files[0], onChange)} />
-        </label>
+        </button>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            if (f) setCropFile(f);
+            e.target.value = "";
+          }}
+        />
         {value && <button className="admin-btn admin-btn--small" onClick={() => onChange("")}>Clear</button>}
       </div>
+      {cropFile && (
+        <PhotoCropModal
+          file={cropFile}
+          label={label || "Photo"}
+          aspect={aspect}
+          onCancel={() => setCropFile(null)}
+          onConfirm={async (blob) => {
+            const ok = await upload(blob, onChange);
+            if (ok) setCropFile(null); // close only after a successful upload
+          }}
+        />
+      )}
     </div>
   );
 }
