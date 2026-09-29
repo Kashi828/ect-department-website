@@ -8,7 +8,7 @@ export const siteSettings = {
   email: "ect@nssraj.ac.in",
   facebook: "#",
   instagram: "#",
-  youtube: "#",
+  youtube: "https://www.youtube.com/@nss_electronics_rky",
   accreditation: "NSS College Rajakumari · Affiliated to Mahatma Gandhi University",
   announcement:
     "Photons Day welcomes new members to the Electronics Club | Workshop on Cloud Computing with Dept. of Computer Application | Seminar: The Secret of the Universe",
@@ -44,6 +44,14 @@ export const siteSettings = {
     signalTitleLine1: "electronics",
     signalTitleLine2: "meets computation",
     signalMeta: "MG UNIVERSITY · NSS COLLEGE RAJAKUMARI · KERALA",
+  },
+  hodQuote: {
+    titleLine1: "Building a lab culture,",
+    titleLine2: "one circuit at a time.",
+    paragraph1:
+      "Our department runs on a simple idea: a concept is only understood once a student has held it. Every course in the programme ends in something measurable — a working circuit, a running program, a connected device. Between semesters, workshops, seminars and the Photons Electronics Club keep that momentum alive.",
+    paragraph2:
+      "What we ask of every student is consistency. Show up, wire it up, break it, and understand why it broke. That habit outlasts any syllabus.",
   },
 };
 

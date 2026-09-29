@@ -23,6 +23,9 @@ export default async function ContactPage() {
             <div className="contact-links">
               <a href={`mailto:${settings.email}`}>EMAIL <span>{settings.email}</span></a>
               <a href={`tel:${settings.phone}`}>PHONE <span>{settings.phone}</span></a>
+              {settings.youtube && settings.youtube !== "#" ? (
+                <a href={settings.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE <span>{settings.youtube.replace(/^https?:\/\//, "").replace(/\/$/, "")}</span></a>
+              ) : null}
               <Link href="/events">ACTIVITY <span>OPEN LOG ↗</span></Link>
             </div>
           </div></Reveal>

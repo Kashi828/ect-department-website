@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SectionTitle from "@/components/SectionTitle";
 import Reveal from "@/components/Reveal";
-import { faculty as fallbackFaculty } from "@/content/sample-data";
+import { getSettings, getFaculty } from "@/lib/site-data";
 
 export const metadata = { title: "About · ECT" };
 
@@ -23,8 +23,14 @@ const FACILITIES = [
   { code: "FAC / 03", name: "Seminar Hall", detail: "The department's stage for workshops, seminars, club activities and project showcases through the year." },
 ];
 
-export default function AboutPage() {
-  const hod = fallbackFaculty.find((f) => f.role === "Head of Department");
+export const dynamic = "force-dynamic";
+
+export default async function AboutPage() {
+  const [hod, settings] = await Promise.all([
+    getFaculty().then((list) => list.find((f) => f.role === "Head of Department")),
+    getSettings(),
+  ]);
+  const q = settings.hodQuote || {}; // falls back to the seed values below
 
   return (
     <>
@@ -64,12 +70,12 @@ export default function AboutPage() {
           <Reveal delay={.08}>
             <div className="hod-band__body">
               <span className="syllabus-panel__kicker">FROM THE HOD'S DESK</span>
-              <h3>Building a lab culture,<br />one batch at a time.</h3>
+              <h3>{q.titleLine1 || "Building a lab culture,"}<br />{q.titleLine2 || "one circuit at a time."}</h3>
               <p>
-                Our department runs on a simple idea: a concept is only understood once a student has held it. Every course in the programme ends in something measurable — a working circuit, a running program, a connected device. Between semesters, workshops, seminars and the Photons Electronics Club keep that momentum alive.
+                {q.paragraph1 || "Our department runs on a simple idea: a concept is only understood once a student has held it. Every course in the programme ends in something measurable — a working circuit, a running program, a connected device. Between semesters, workshops, seminars and the Photons Electronics Club keep that momentum alive."}
               </p>
               <p>
-                What we ask of every student is consistency. Show up, wire it up, break it, and understand why it broke. That habit outlasts any syllabus.
+                {q.paragraph2 || "What we ask of every student is consistency. Show up, wire it up, break it, and understand why it broke. That habit outlasts any syllabus."}
               </p>
               <div className="hod-band__meta">
                 <strong>{hod?.name || "Head of Department"}</strong>

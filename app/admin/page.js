@@ -255,6 +255,7 @@ function SettingsEditor({ data, onChange, upload, save, busy }) {
           <Field label="Hero line 1" value={data.heroLine1} onChange={(v) => onChange({ ...data, heroLine1: v })} />
           <Field label="Hero line 2" value={data.heroLine2} onChange={(v) => onChange({ ...data, heroLine2: v })} />
           <Field label="Hero subtitle" value={data.heroSubtitle} textarea onChange={(v) => onChange({ ...data, heroSubtitle: v })} />
+          <Field label="YouTube channel URL" value={data.youtube} onChange={(v) => onChange({ ...data, youtube: v })} />
         </div>
       </article>
 
@@ -267,6 +268,16 @@ function SettingsEditor({ data, onChange, upload, save, busy }) {
           <Field label="Highlight 2" value={data.heroQuote?.highlight2} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight2: v } })} />
           <Field label="Highlight 3" value={data.heroQuote?.highlight3} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight3: v } })} />
           <Field label="Highlight 4" value={data.heroQuote?.highlight4} onChange={(v) => onChange({ ...data, heroQuote: { ...data.heroQuote, highlight4: v } })} />
+        </div>
+      </article>
+
+      <article className="admin-card">
+        <div className="admin-card__head"><strong>From the HOD's desk · About page quote</strong></div>
+        <div className="admin-grid">
+          <Field label="Title line 1" value={data.hodQuote?.titleLine1} onChange={(v) => onChange({ ...data, hodQuote: { ...data.hodQuote, titleLine1: v } })} />
+          <Field label="Title line 2" value={data.hodQuote?.titleLine2} onChange={(v) => onChange({ ...data, hodQuote: { ...data.hodQuote, titleLine2: v } })} />
+          <Field label="Paragraph 1" value={data.hodQuote?.paragraph1} textarea onChange={(v) => onChange({ ...data, hodQuote: { ...data.hodQuote, paragraph1: v } })} />
+          <Field label="Paragraph 2" value={data.hodQuote?.paragraph2} textarea onChange={(v) => onChange({ ...data, hodQuote: { ...data.hodQuote, paragraph2: v } })} />
         </div>
       </article>
 

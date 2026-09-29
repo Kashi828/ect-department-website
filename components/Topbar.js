@@ -9,7 +9,12 @@ export default function Topbar({ settings }) {
         <div className="top-strip__links">
           <a href={`mailto:${settings.email}`}>EMAIL</a>
           <a href={`tel:${settings.phone}`}>CALL</a>
-          <a href={settings.instagram}>INSTAGRAM</a>
+          {settings.youtube && settings.youtube !== "#" ? (
+            <a href={settings.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+          ) : null}
+          {settings.instagram && settings.instagram !== "#" ? (
+            <a href={settings.instagram} target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+          ) : null}
         </div>
       </div>
     </div>
