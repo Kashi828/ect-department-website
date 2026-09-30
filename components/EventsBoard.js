@@ -3,14 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { formatEventDate } from "@/lib/dates";
+import { formatEventDate, formatEventRange, eventBadgeParts } from "@/lib/dates";
 import Lightbox from "./Lightbox";
 
 function EventCard({ e, index }) {
   const [open, setOpen] = useState(false);
-  const d = e.date ? new Date(e.date) : null;
-  const day = d ? d.toLocaleDateString("en-IN", { day: "2-digit" }) : "--";
-  const month = d ? d.toLocaleDateString("en-IN", { month: "short" }).toUpperCase() : "---";
+  const { day, month } = eventBadgeParts(e.endDate || e.date ? (e.endDate && e.date ? e.endDate : e.date) : null);
 
   return (
     <motion.article
@@ -25,7 +23,11 @@ function EventCard({ e, index }) {
         <span>{month}</span>
       </div>
       <div className="event-item__body">
-        <span>{e.time || formatEventDate(e.date)} {e.venue ? `· ${e.venue}` : ""}</span>
+        <span>
+          {e.time ? formatEventRange(e.date, e.endDate) : formatEventDate(e.date)}
+          {e.time ? ` · ${e.time}` : ""}
+          {e.venue ? ` · ${e.venue}` : ""}
+        </span>
         <h3>{e.title}</h3>
         {e.subtitle && <p>{e.subtitle}</p>}
         {e.resourcePerson && <p>{e.resourcePerson}</p>}

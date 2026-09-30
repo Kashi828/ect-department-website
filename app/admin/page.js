@@ -130,9 +130,9 @@ export default function AdminPage() {
       {tab === "toppers" && <ListEditor section="toppers" items={data.toppers} onChange={(v) => setSection("toppers", v)} save={save} upload={upload} busy={busy}
         fields={{ name: "Name", yearLabel: "Year / Class", sgpa: "SGPA" }} photoKey="photo" />}
       {tab === "events" && <ListEditor section="events" items={data.events} onChange={(v) => setSection("events", v)} save={save} upload={upload} busy={busy}
-        fields={{ title: "Title", subtitle: "Subtitle (optional)", date: "Date (YYYY-MM-DD)", time: "Time (optional)", venue: "Venue (optional)", resourcePerson: "Resource person (optional)", organizers: "Organisers (optional)" }} photoKey="poster" photoLabel="Poster" titleKey="title" />}
+        fields={{ title: "Title", subtitle: "Subtitle (optional)", date: "Start date (YYYY-MM-DD)", endDate: "End date — last day only for 2+ day events (optional)", time: "Time (optional)", venue: "Venue (optional)", resourcePerson: "Resource person (optional)", organizers: "Organisers (optional)" }} photoKey="poster" photoLabel="Poster" titleKey="title" crop={false} />}
       {tab === "achievements" && <ListEditor section="achievements" items={data.achievements} onChange={(v) => setSection("achievements", v)} save={save} upload={upload} busy={busy}
-        fields={{ title: "Title", detail: "Detail" }} photoKey="poster" photoLabel="Poster" titleKey="title" />}
+        fields={{ title: "Title", detail: "Detail" }} photoKey="poster" photoLabel="Poster" titleKey="title" crop={false} />}
       {tab === "alumni" && <ListEditor section="alumni" items={data.alumni} onChange={(v) => setSection("alumni", v)} save={save} upload={upload} busy={busy}
         fields={{ name: "Name", batch: "Batch", position: "Current position" }} titleKey="name" />}
       {tab === "gallery" && <GalleryEditor items={data.gallery} onChange={(v) => setSection("gallery", v)} save={save} upload={upload} busy={busy} />}
@@ -156,9 +156,16 @@ function Field({ label, value, onChange, textarea }) {
   );
 }
 
-function PhotoPicker({ label, value, onChange, upload, aspect = 1 }) {
+function PhotoPicker({ label, value, onChange, upload, aspect = 1, crop = true }) {
   const inputRef = useRef(null);
-  const [cropFile, setCropFile] = useState(null);
+  const [pickedFile, setPickedFile] = useState(null);
+  // Person photos (faculty, toppers) get the align/crop dialog so faces stay
+  // in frame; posters and gallery images must upload exactly as-is.
+  const pickerId = crop ? "crop" : "direct";
+  const doUpload = (file) => {
+    if (crop) setPickedFile(file);
+    else upload(file, onChange);
+  };
   return (
     <div className="admin-photo">
       <span className="admin-field__label">{label || "Photo"}</span>
@@ -177,21 +184,21 @@ function PhotoPicker({ label, value, onChange, upload, aspect = 1 }) {
           hidden
           onChange={(e) => {
             const f = e.target.files?.[0];
-            if (f) setCropFile(f);
+            if (f) doUpload(f);
             e.target.value = "";
           }}
         />
         {value && <button className="admin-btn admin-btn--small" onClick={() => onChange("")}>Clear</button>}
       </div>
-      {cropFile && (
+      {pickedFile && pickerId === "crop" && (
         <PhotoCropModal
-          file={cropFile}
+          file={pickedFile}
           label={label || "Photo"}
           aspect={aspect}
-          onCancel={() => setCropFile(null)}
+          onCancel={() => setPickedFile(null)}
           onConfirm={async (blob) => {
             const ok = await upload(blob, onChange);
-            if (ok) setCropFile(null); // close only after a successful upload
+            if (ok) setPickedFile(null); // close only after a successful upload
           }}
         />
       )}
@@ -199,7 +206,7 @@ function PhotoPicker({ label, value, onChange, upload, aspect = 1 }) {
   );
 }
 
-function ListEditor({ section, items = [], onChange, save, upload, busy, fields, photoKey, photoLabel, titleKey = "name" }) {
+function ListEditor({ section, items = [], onChange, save, upload, busy, fields, photoKey, photoLabel, titleKey = "name", crop = true }) {
   const move = (i, dir) => {
     const next = [...items];
     const j = i + dir;
@@ -231,7 +238,7 @@ function ListEditor({ section, items = [], onChange, save, upload, busy, fields,
               <Field key={key} label={label} value={item[key]} textarea={key === "detail" || key === "blurb"} onChange={(v) => update(i, key, v)} />
             ))}
           </div>
-          {photoKey && <PhotoPicker label={photoLabel || "Photo"} value={item[photoKey]} onChange={(v) => update(i, photoKey, v)} upload={upload} />}
+          {photoKey && <PhotoPicker label={photoLabel || "Photo"} value={item[photoKey]} onChange={(v) => update(i, photoKey, v)} upload={upload} crop={crop} />}
         </article>
       ))}
       <div className="admin-row">
@@ -317,7 +324,7 @@ function GalleryEditor({ items = [], onChange, save, upload, busy }) {
           <div className="admin-grid">
             <Field label="Caption" value={g.label} onChange={(v) => update(i, "label", v)} />
           </div>
-          <PhotoPicker label="Image" value={g.src} onChange={(v) => update(i, "src", v)} upload={upload} />
+          <PhotoPicker label="Image" value={g.src} onChange={(v) => update(i, "src", v)} upload={upload} crop={false} />
         </article>
       ))}
       <div className="admin-row">
