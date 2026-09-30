@@ -3,6 +3,41 @@
 import { useEffect, useRef, useState } from "react";
 import PhotoCropModal from "@/components/PhotoCropModal";
 
+function SnapshotsPanel() {
+  const [snaps, setSnaps] = useState(null);
+  const [msg, setMsg] = useState("");
+
+  const load = () => {
+    api("/admin/api/snapshots").then((r) => setSnaps(r.ok ? r.snapshots : []));
+  };
+  useEffect(load, []);
+
+  async function restore(i, at) {
+    if (!confirm("Replace ALL current content with the snapshot from " + new Date(at).toLocaleString() + "?")) return;
+    const r = await api("/admin/api/snapshots", { index: i });
+    setMsg(r.ok ? "Restored ✓ — switch tabs to see the restored content" : r.error || "Restore failed");
+    setTimeout(() => setMsg(""), 4000);
+  }
+
+  return (
+    <article className="admin-card">
+      <div className="admin-card__head"><strong>Backup &amp; history (last 20 saves)</strong></div>
+      <p style={{ fontSize: ".8rem", opacity: .7, margin: "4px 0 10px" }}>
+        Every save keeps a snapshot of the content from just before it. If an edit goes wrong, restore one of these.
+      </p>
+      {msg && <p className="admin-saved">{msg}</p>}
+      {!snaps && <p style={{ fontSize: ".8rem", opacity: .6 }}>Loading…</p>}
+      {snaps?.length === 0 && <p style={{ fontSize: ".8rem", opacity: .6 }}>No snapshots yet — they appear here after your first save.</p>}
+      {snaps?.map((s, i) => (
+        <div key={s.at + i} className="admin-row" style={{ justifyContent: "space-between", alignItems: "center", padding: "6px 0", borderTop: "1px solid rgba(128,128,128,.2)" }}>
+          <span style={{ fontSize: ".8rem" }}>{new Date(s.at).toLocaleString()}</span>
+          <button className="admin-btn admin-btn--small" onClick={() => restore(i, s.at)}>Restore</button>
+        </div>
+      ))}
+    </article>
+  );
+}
+
 const EMPTY = {
   siteSettings: {},
   events: [],
@@ -299,8 +334,10 @@ function SettingsEditor({ data, onChange, upload, save, busy }) {
       </article>
 
       <div className="admin-row">
+        <a className="admin-btn" href="/api/content-export" download="ect-content.json">Download backup (JSON)</a>
         <button className="admin-btn admin-btn--primary" disabled={busy} onClick={() => save("siteSettings")}>{busy ? "Saving…" : "Save changes"}</button>
       </div>
+      <SnapshotsPanel />
     </section>
   );
 }
